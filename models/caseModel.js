@@ -1,4 +1,5 @@
-// server/models/caseModel.js
+// models/caseModel.js
+
 import mongoose from 'mongoose';
 
 // Schema for custom fields

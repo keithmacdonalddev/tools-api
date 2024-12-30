@@ -1,4 +1,5 @@
-// server/controllers/caseController.js
+// controllers/caseController.js
+
 import { Case, CustomField } from '../models/caseModel.js';
 import AppError from '../utils/appError.js';
 

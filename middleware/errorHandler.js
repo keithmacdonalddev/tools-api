@@ -1,4 +1,4 @@
-// server/middleware/errorHandler.js
+// middleware/errorHandler.js
 
 const AppError = require('../utils/appError');
 

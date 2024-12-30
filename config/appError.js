@@ -1,4 +1,4 @@
-// server/utils/appError.js
+// config/appError.js
 
 class AppError extends Error {
     constructor(message, statusCode) {

@@ -1,4 +1,5 @@
-// server/routes/caseRoutes.js
+// routes/caseRoutes.js
+
 import express from 'express';
 import {
     getCases,
