@@ -3,7 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import caseRoutes from './routes/caseRoutes.js'; // Add this import
+// import caseRoutes from './routes/caseRoutes.js'; // Add this import
 
 dotenv.config();
 
@@ -34,12 +34,12 @@ app.get('/', (req, res) => {
 });
 
 // Middleware to log incoming requests
-app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-    console.log('Request Body:', req.body); // Log the request body
-    console.log('Request Query:', req.query); // Log query parameters if any
-    next();
-});
+// app.use((req, res, next) => {
+//     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+//     console.log('Request Body:', req.body); // Log the request body
+//     console.log('Request Query:', req.query); // Log query parameters if any
+//     next();
+// });
 
 // Handle MongoDB connection events
 mongoose.connection.on('connected', () => {
@@ -54,7 +54,11 @@ mongoose.connection.on('disconnected', () => {
     console.log('Mongoose disconnected');
 });
 
+// Routes
+// app.use('/api/cases', caseRoutes);
+
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
