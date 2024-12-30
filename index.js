@@ -9,8 +9,15 @@ dotenv.config();
 
 const app = express();
 
+// Allow requests from specific origins or all origins
+const corsOptions = {
+    origin: '*', // Allow all origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific HTTP methods
+    allowedHeaders: 'Content-Type,Authorization', // Allow specific headers
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB Connection with all options
