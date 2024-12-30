@@ -65,17 +65,56 @@ export const getCase = async (req, res, next) => {
 // Create new case
 export const createCase = async (req, res, next) => {
     try {
+        // Log the incoming request body for debugging
+        console.log('Creating new case with data:', req.body);
+
+        // Validate required fields
+        const requiredFields = [
+            'caseNumber',
+            'subject',
+            'description',
+            'department',
+        ];
+        const missingFields = requiredFields.filter(
+            (field) => !req.body[field]
+        );
+
+        if (missingFields.length > 0) {
+            return next(
+                new AppError(
+                    `Missing required fields: ${missingFields.join(', ')}`,
+                    400
+                )
+            );
+        }
+
         const newCase = await Case.create(req.body);
+
+        // Log successful creation
+        console.log('Case created successfully:', newCase);
 
         res.status(201).json({
             status: 'success',
             data: newCase,
         });
     } catch (error) {
+        console.error('Error creating case:', error);
+
         if (error.code === 11000) {
-            // Duplicate key error
+            // Duplicate case number error
             return next(new AppError('Case number already exists', 400));
         }
+
+        if (error.name === 'ValidationError') {
+            // Mongoose validation error
+            const messages = Object.values(error.errors).map(
+                (err) => err.message
+            );
+            return next(
+                new AppError(`Validation error: ${messages.join('. ')}`, 400)
+            );
+        }
+
         next(new AppError('Error creating case', 500));
     }
 };

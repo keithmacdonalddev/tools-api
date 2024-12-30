@@ -23,41 +23,37 @@ const customFieldSchema = new mongoose.Schema({
     },
 });
 
-// Main case schema
+// Main case schema - Simplified for your specific needs
 const caseSchema = new mongoose.Schema(
     {
         caseNumber: {
             type: String,
-            required: true,
+            required: [true, 'Case number is required'],
             unique: true,
+            trim: true, // Removes whitespace from both ends
         },
         subject: {
             type: String,
-            required: true,
+            required: [true, 'Subject is required'],
+            trim: true,
         },
         description: {
             type: String,
-            required: true,
-        },
-        contactName: {
-            type: String,
-            required: true,
-        },
-        businessName: {
-            type: String,
-            required: true,
-        },
-        coid: {
-            type: String,
-            required: true,
-        },
-        mid: {
-            type: String,
-            required: true,
+            required: [true, 'Description is required'],
         },
         department: {
             type: String,
+            required: [true, 'Department is required'],
+            enum: {
+                values: ['Payments', 'Payroll', 'QBO'],
+                message: '{VALUE} is not a valid department',
+            },
+        },
+        status: {
+            type: String,
             required: true,
+            enum: ['open', 'closed'],
+            default: 'open',
         },
         // For storing custom field values
         customFields: {
@@ -76,10 +72,6 @@ caseSchema.index({
     caseNumber: 'text',
     subject: 'text',
     description: 'text',
-    contactName: 'text',
-    businessName: 'text',
-    coid: 'text',
-    mid: 'text',
     department: 'text',
 });
 
